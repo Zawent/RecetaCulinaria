@@ -6,16 +6,14 @@ export async function crearUsuario(req, res) {
   try {
     const { nombre, email, password } = req.body;
 
-    // Validación simple
     if (!nombre || !email || !password) {
       return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
-    // Crear el objeto con la estructura definida en el modelo
     const nuevoUsuario = {
       nombre,
       email,
-      password, // en producción se debe hashear
+      password,
       fechaRegistro: new Date()
     };
 
@@ -42,7 +40,6 @@ export async function obtenerUsuario(req, res) {
   try {
     const { id } = req.params;
 
-    // Convertir string a ObjectId
     const usuario = await UsuarioModel.findById(new ObjectId(id));
     if (!usuario) {
       return res.status(404).json({ error: "Usuario no encontrado" });
